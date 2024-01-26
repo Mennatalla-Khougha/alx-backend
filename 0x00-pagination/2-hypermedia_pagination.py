@@ -67,7 +67,7 @@ class Server:
 
         return result
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """method that takes the same arguments (and defaults) as get_page and
         returns a dictionary
 
