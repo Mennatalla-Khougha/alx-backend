@@ -2,7 +2,7 @@
 """Define the index_range function"""
 import csv
 import math
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Any
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -67,7 +67,7 @@ class Server:
 
         return result
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """method that takes the same arguments (and defaults) as get_page and
         returns a dictionary
 
