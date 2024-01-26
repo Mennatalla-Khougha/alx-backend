@@ -61,7 +61,7 @@ class Server:
         start, end = index_range(page, page_size)
 
         try:
-            result = self.__dataset[start: end + 1]
+            result = self.__dataset[start: end]
         except IndexError:
             result = []
 
