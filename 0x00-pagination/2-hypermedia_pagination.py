@@ -76,7 +76,7 @@ class Server:
             page_size (int, optional): Defaults to 10.
 
         Returns:
-            Dict[str, int] 
+            Dict[str, int]
         """
         data = self.get_page(page, page_size)
         total = math.ceil(len(self.__dataset) / page_size)
