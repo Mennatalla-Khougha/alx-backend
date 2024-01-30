@@ -16,7 +16,7 @@ class LFUCache(BaseCaching):
     def put(self, key, item):
         """Add an item in the cache"""
         if key is not None and item is not None:
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 min_freq = min(self.cache_map, key=self.cache_map.get)
                 self.cache_data.pop(min_freq)
                 # removed_key = self.removed_lfu()
