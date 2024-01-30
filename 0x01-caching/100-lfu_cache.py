@@ -39,7 +39,7 @@ class LFUCache(BaseCaching):
 
     def removed_lru(self):
         """return the LRU key to be removed"""
-        removed_key, _ = self.cache_map.popitem(last=False)
+        removed_key, _ = self.cache_map.popitem(last=True)
         self.cache_data.pop(removed_key)
         return removed_key
 
