@@ -4,8 +4,8 @@ from collections import OrderedDict
 from base_caching import BaseCaching
 
 
-class LRUCache(BaseCaching):
-    """ LRUCaching defines:
+class LFUCache(BaseCaching):
+    """ LFUCaching defines:
       - put and get method to retrieve data
     """
     def __init__(self):
@@ -25,7 +25,8 @@ class LRUCache(BaseCaching):
     def removed_lfu(self):
         """return the LFU key to be removed"""
         min_freq = min(self.cache_map.values())
-        min_freq_keys = [key for key, freq in self.cache_map.items() if freq == min_freq]
+        min_freq_keys = [key for key, freq in
+                         self.cache_map.items() if freq == min_freq]
 
         if len(min_freq_keys) > 1:
             removed_key = self.removed_lru()
