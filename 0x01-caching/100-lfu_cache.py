@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""class LRUCaching that inherits from BaseCaching"""
+"""class LFUCaching that inherits from BaseCaching"""
 from collections import OrderedDict
 from base_caching import BaseCaching
 
@@ -46,6 +46,6 @@ class LFUCache(BaseCaching):
     def get(self, key):
         """Get an item by key"""
         if key is not None and key in self.cache_data:
-            self.cache_data.move_to_end(key, last=False)
+            self.cache_map[key] += 1
             return self.cache_data[key]
         return None
