@@ -17,7 +17,7 @@ class LRUCache(BaseCaching):
         """Add an item in the cache"""
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                removed_key, _ = self.cache_data.popitem(last=False)
+                removed_key, _ = self.cache_data.popitem(last=True)
                 print(f'DISCARD: {removed_key}')
             self.cache_data[key] = item
             self.cache_data.move_to_end(key, last=False)
