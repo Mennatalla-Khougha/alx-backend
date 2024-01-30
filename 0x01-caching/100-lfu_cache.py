@@ -16,7 +16,7 @@ class LFUCache(BaseCaching):
     def put(self, key, item):
         """Add an item in the cache"""
         if key is not None and item is not None:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+            if len(self.cache_map) >= BaseCaching.MAX_ITEMS:
                 removed_key = self.removed_lfu()
                 print(f'DISCARD: {removed_key}')
             self.cache_data[key] = item
@@ -39,7 +39,7 @@ class LFUCache(BaseCaching):
 
     def removed_lru(self):
         """return the LRU key to be removed"""
-        removed_key, _ = self.cache_map.popitem(last=True)
+        removed_key, _ = self.cache_map.popitem(last=False)
         self.cache_data.pop(removed_key)
         return removed_key
 
