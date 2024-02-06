@@ -26,17 +26,19 @@ users = {
 
 def get_user():
     """ Function that returns a user dictionary or None"""
-    user = request.args.get('login_as')
-    if user:
-        return users.get(int(user))
+    user_id = request.args.get('login_as')
+    if user_id and int(user_id) in users:
+        return users.get(int(user_id))
     return None
 
 
 @app.before_request
 def before_request():
-    """ use get_user to find a user if any, and set it as a global"""
-    user = get_user()
-    g.user = user
+    """Use get_user to find a user if any, and set it as a global"""
+    g.user = get_user()
+    # if g.user:
+    #     locale = g.user['locale'] or app.config['BABEL_DEFAULT_LOCALE']
+    #     babel.locale_selector_func = lambda: locale
 
 
 @babel.localeselector
@@ -52,7 +54,7 @@ def get_locale():
 @app.route('/')
 def index():
     """The base route"""
-    return render_template('5-index.html')
+    return render_template('5-index.html', user=g.user)
 
 
 if __name__ == '__main__':
