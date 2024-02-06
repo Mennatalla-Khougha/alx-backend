@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from flask_babel import Babel
 
 
-class Config(object):
+class Config:
     """Set Babel’s default locale"""
     LANGUAGES = ['en', 'fn']
     BABEL_DEFAULT_LOCAL = 'en'
@@ -23,4 +23,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port="5000", host="0.0.0.0", debug=True)
