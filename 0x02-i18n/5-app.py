@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
-"""Instantiate the Babel object"""
+"""module for flask app and babel"""
+
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 
 class Config:
-    """Set Babel’s default locale"""
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    """Configuration class for Flask application."""
+
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-babel = Babel(app)
 
+babel = Babel(app)
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -25,37 +27,32 @@ users = {
 
 
 def get_user():
-    """ Function that returns a user dictionary or None"""
-    user_id = request.args.get('login_as')
-    if user_id and int(user_id) in users:
-        return users.get(int(user_id))
+    """gets user info if login_as provided else None"""
+    user_id = request.args.get("login_as")
+    if not user_id:
+        return None
+    for id, user in users.items():
+        if id == int(user_id):
+            return user
     return None
 
 
 @app.before_request
 def before_request():
-    """Use get_user to find a user if any, and set it as a global"""
+    """sets g.user"""
     g.user = get_user()
-    # if g.user:
-    #     locale = g.user['locale'] or app.config['BABEL_DEFAULT_LOCALE']
-    #     babel.locale_selector_func = lambda: locale
 
 
 @babel.localeselector
 def get_locale():
-    """Determine the best match with our supported languages"""
+    """determines the locale to be used"""
     locale = request.args.get("locale")
-    supported_locales = app.config['LANGUAGES']
-    if locale in supported_locales:
+    if locale in Config.LANGUAGES:
         return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@app.route('/')
-def index():
-    """The base route"""
-    return render_template('5-index.html', user=g.user)
-
-
-if __name__ == '__main__':
-    app.run()
+@app.route("/")
+def hello():
+    """renders 0-index.html"""
+    return render_template("5-index.html", user=g.user)
