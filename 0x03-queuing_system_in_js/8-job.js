@@ -3,20 +3,21 @@ function createPushNotificationsJobs(jobs, queue) {
 		throw new Error("Jobs is not an array");
 	}
 	jobs.forEach((ele) => {
-		const job = queue.create("push_notification_code_3", ele).save((err) => {
+        const job = queue.create("push_notification_code_3", ele)
+		job.on("complete", () =>
+        console.log(`Notification job ${job.id} completed`)
+		);
+		job.on("failed", (err) =>
+        console.log(`Notification job ${job.id} failed: ${err}`)
+		);
+		job.on("progress", (progress, data) =>
+        console.log(`Notification job ${job.id} ${progress}% complete`)
+		);
+        job.save((err) => {
 			if (!err) {
 				console.log(`Notification job created ${job.id}`);
 			}
 		});
-		job.on("complete", () =>
-			console.log(`Notification job ${job.id} completed`)
-		);
-		job.on("failed", (err) =>
-			console.log(`Notification job ${job.id} failed: ${err}`)
-		);
-		job.on("progress", (progress, data) =>
-			console.log(`Notification job ${job.id} ${progress}% complete`)
-		);
 	});
 }
 
